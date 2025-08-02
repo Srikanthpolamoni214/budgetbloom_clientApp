@@ -3,6 +3,7 @@ import BudgetCategoryForm from '../components/budget/budgetCatogery';
 import BudgetTable from '../components/budget/budgetTable';
 import RemainingVsAllocatedChart from '../components/budget/remainingvsallocatedCharts';
 import AlertsList from '../components/budget/alertList';
+import { baseURL } from '../App';
 
 const BudgetPage = () => {
   const [budgets, setBudgets] = useState([]);
@@ -10,7 +11,7 @@ const token = localStorage.getItem("token");
 const config = { headers: { 'Content-Type': 'application/json',Authorization: `Bearer ${token}` } };
   useEffect(() => {
     // Fetch budget data from backend
-    fetch('http://localhost:3201/budgets', config)
+    fetch(`${baseURL}/budgets`, config)
       .then(res => res.json())
       .then(data => setBudgets(data))
           .catch(err => console.error("Fetch error:", err));
@@ -19,7 +20,7 @@ const config = { headers: { 'Content-Type': 'application/json',Authorization: `B
 
   const addBudget = (newItem) => {
     // Call backend to save
-    fetch('http://localhost:3201/budgets', {
+    fetch(`${baseURL}/budgets`, {
 
       method: 'POST',
       
@@ -31,7 +32,7 @@ const config = { headers: { 'Content-Type': 'application/json',Authorization: `B
   };
 
   const deleteBudget = (id) => {
-    fetch(`http://localhost:3201/budgets/${id}`, { method: 'DELETE' , headers: config.headers })
+    fetch(`${baseURL}/budgets/${id}`, { method: 'DELETE' , headers: config.headers })
       .then(() => setBudgets(budgets.filter(b => b.id !== id)));
   };
 

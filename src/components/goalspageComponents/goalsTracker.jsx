@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import ProgressRings from '../goalspageComponents/goalsRings';
 import GoalChart from './goalsChart';
+import { baseURL } from '../../App';
 
  const GoalTracker = () => {
   const [goals, setGoals] = useState([]);
@@ -14,7 +15,7 @@ const config = {
   },
 };
   const fetchGoals = async () => {
-    const res = await fetch('http://localhost:3201/api/goalsTracker', {
+    const res = await fetch(`${baseURL}/api/goalsTracker`, {
       method: 'GET',
       headers: config.headers,
     });
@@ -25,7 +26,7 @@ const config = {
   useEffect(() => { fetchGoals(); }, []);
 
   const deleteGoal = async (goal_id) => {
-    await fetch(`http://localhost:3201/api/goalsTracker/${goal_id}`, { method: 'DELETE', headers: config.headers });
+    await fetch(`${baseURL}/api/goalsTracker/${goal_id}`, { method: 'DELETE', headers: config.headers });
     fetchGoals();
   };
 

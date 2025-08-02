@@ -3,13 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { jwtDecode } from "jwt-decode";
 import "./navbar.css";
+import { baseURL } from "../../App";
 
 const Navbar = () => {
   const [isSidebarOpened, setIsSidebarOpened] = useState(false);
   const [isProfileOpened, setIsProfileOpened] = useState(false);
   const [showNavbar, setShowNavbar] = useState(true);
   const [image, setImage] = useState("default_profile_photo.jpg"); // default fallback
-
+const [imageURL, setImageUrl] = useState()
   const profileRef = useRef(null);
   const lastScrollY = useRef(0);
   const timeoutRef = useRef(null);
@@ -23,6 +24,9 @@ const Navbar = () => {
         const decoded = jwtDecode(token);
         if (decoded.photo) {
           setImage(decoded.photo);
+        }
+        else {
+          setImageUrl(decoded.photoUrl || "default_profile_photo.jpg");
         }
       } catch (error) {
         console.error("Invalid token:", error.message);
@@ -112,7 +116,7 @@ const Navbar = () => {
             tabIndex={0}
           >
             <img 
-              src={`http://localhost:3201/uploads/${image}`}
+              src={`${imageURL ? imageURL : `${baseURL}/uploads/${image}`}`}
               alt="Profile"  
               className="rounded-full object-cover border"  height={50}
               width={50}

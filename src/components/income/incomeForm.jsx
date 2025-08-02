@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { baseURL } from '../../App';
 
 const IncomeForm = ({ onIncomeAdded }) => {
   const [formData, setFormData] = useState({
@@ -34,10 +35,10 @@ const IncomeForm = ({ onIncomeAdded }) => {
     }
 
     try {
-      const response = await axios.post('http://localhost:3201/income', formData, config);
+      const response = await axios.post(`${baseURL}http://localhost:3201/income`, formData, config);
 
       if (response.data.message === "Income added successfully") {
-        const updatedIncome = await axios.get('http://localhost:3201/getIncome', config);
+        const updatedIncome = await axios.get(`${baseURL}/getIncome`, config);
         onIncomeAdded(updatedIncome.data);
 
         setFormData({ source: '', amount: '', category: '', date: '' });

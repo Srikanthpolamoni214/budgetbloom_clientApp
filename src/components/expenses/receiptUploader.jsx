@@ -1,6 +1,7 @@
 // ReceiptUploader.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
+import { baseURL } from '../../App';
 
 const ReceiptUploader = () => {
   const [file, setFile] = useState(null);
@@ -20,7 +21,7 @@ const ReceiptUploader = () => {
 
     try {
       setUploading(true);
-      const response = await axios.post('https://budgetbloom-app.onrender.com/receipts', formData, {
+      const response = await axios.post(`${baseURL}/receipts`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 

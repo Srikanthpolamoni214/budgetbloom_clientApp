@@ -1,6 +1,7 @@
 // SavingsGrowthChart.jsx
 import React, { useEffect, useState , useMemo} from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { baseURL } from "../../App";
 
 const SavingsGrowthChart = () => {
   
@@ -8,13 +9,13 @@ const SavingsGrowthChart = () => {
   const [income, setIncome] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3201/report")
+    fetch(`${baseURL}/report`)
       .then((res) => res.json())
       .then((data) => setExpenses(data));
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:3201/getIncome")
+    fetch(`${baseURL}/getIncome`)
       .then((res) => res.json())
       .then((data) => setIncome(data));
   }, []);

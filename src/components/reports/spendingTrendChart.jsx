@@ -1,12 +1,13 @@
 // SpendingTrendChart.jsx
 import React, { useEffect, useState } from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { baseURL } from "../../App";
 
 const SpendingTrendChart = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3201/report")
+    fetch(`${baseURL}/report`)
       .then(res => res.json())
       .then(data => setData(data));
      

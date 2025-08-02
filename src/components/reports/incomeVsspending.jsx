@@ -172,19 +172,20 @@ import {
   ResponsiveContainer,
   Legend,
 } from "recharts";
+import { baseURL } from "../../App";
 
 const IncomeVsExpenseGraph = () => {
   const [expenses, setExpenses] = useState([]);
   const [income, setIncome] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3201/report")
+    fetch(`${baseURL}/report`)
       .then((res) => res.json())
       .then((data) => setExpenses(data));
   }, []);
 
   useEffect(() => {
-    fetch("https://budgetbloom-app.onrender.com/getIncome")
+    fetch(`${baseURL}/getIncome`)
       .then((res) => res.json())
       .then((data) => setIncome(data));
   }, []);

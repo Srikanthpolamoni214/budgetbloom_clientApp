@@ -6,7 +6,8 @@ import ReceiptUploader from '../components/expenses/receiptUploader';
 import SearchBar from '../components/expenses/searchBar';
 import SortDropdown from '../components/expenses/sortDropdown';
 import axios from 'axios';
-import ExpenseForm from '../components/expenses/esxpensesForm';
+import ExpenseForm from '../components/expenses/expensesForm';
+import { baseURL } from '../App';
 
 const ExpensePage = () => {
   const [expenses, setExpenses] = useState([]);
@@ -19,7 +20,7 @@ const ExpensePage = () => {
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const response = await axios.get('https://budgetbloom-app.onrender.com/expenses',  config );
+        const response = await axios.get(`${baseURL}/expenses`,  config );
         setExpenses(response.data);
         setFilteredExpenses(response.data);
       } catch (err) {

@@ -6,6 +6,7 @@ import axios from 'axios';
 import FilterToolbar from '../components/income/filterIncome';
 import IncomeList from '../components/income/incomeList';
 import IncomeCategoryChart from '../components/income/incomeCatageroy';
+import { baseURL } from '../App';
 
 const IncomePage = () => {
   const [incomeData, setIncomeData] = useState([]);
@@ -21,7 +22,7 @@ const IncomePage = () => {
 
 
       try {
-        const response = await axios.get('http://localhost:3201/getIncome',  config);
+        const response = await axios.get(`${baseURL}/getIncome`,  config);
         console.log('Fetched income data:', response.data);
         setIncomeData(response.data);
 console.log( 'Setting filtered data:', response.data);

@@ -63,6 +63,7 @@
 
 // export default BudgetComparisonTable;
 import React, { useEffect, useState } from "react";
+import { baseURL } from "../../App";
 
 const BudgetComparisonTable = () => {
   const [budgets, setBudgets] = useState([]);
@@ -70,7 +71,7 @@ const BudgetComparisonTable = () => {
 
   useEffect(() => {
     const fetchBudgets = async () => {
-      const response = await fetch("http://localhost:3201/budgets");
+      const response = await fetch(`${baseURL}/budgets`);
       const data = await response.json();
       setBudgets(data);
     };
@@ -79,7 +80,7 @@ const BudgetComparisonTable = () => {
 
   useEffect(() => {
     const fetchExpenses = async () => {
-      const response = await fetch(" http://localhost:3201/expenses");
+      const response = await fetch(`${baseURL}/expenses`);
       const data = await response.json();
       setExpenses(data);
     };

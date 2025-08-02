@@ -22,6 +22,7 @@ import {
 } from "recharts";
 import CurrencyToggle from "../userDashboard/currencyToggle";
 import FilterBar from "../userDashboard/filterbar";
+import { baseURL } from "../../App";
 
 const SummaryCards = ({ incomedata, expenseData }) => {
   const [filterOption, setFilterOption] = useState("all");
@@ -38,7 +39,7 @@ const SummaryCards = ({ incomedata, expenseData }) => {
   );
 console.log("485" , categories)
   useEffect(() => {
-    fetch("http://localhost:3201/api/goalsTracker")
+    fetch(`${baseURL}/api/goalsTracker`)
       .then((res) => res.json())
       .then((data) => {
         if (data.goal) {
@@ -134,7 +135,7 @@ console.log("485" , categories)
   }
  setGoal(newGoal);
     setIsModalOpen(false);
-    fetch("http://localhost:3201/api/goal", {
+    fetch(`${baseURL}/api/goal`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ goal: newGoal }),

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Tooltip as ReactTooltip } from 'react-tooltip';
 import 'react-tooltip/dist/react-tooltip.css';
 import dayjs from 'dayjs';
+import { baseURL } from '../../App';
 
 const RecentActivityList = () => {
   const [transactions, setTransactions] = useState([]);
@@ -14,7 +15,7 @@ const RecentActivityList = () => {
   useEffect(() => {
     const fetchTransactions = async () => {
       try {
-        const res = await fetch('http://localhost:3201/api/transactions', config);
+        const res = await fetch(`${baseURL}/api/transactions`, config);
         const data = await res.json();
         console.log('Fetched transactions:', data);
         

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { baseURL } from '../../App';
 
 const GoalProgressBar = () => {
   const [goals, setGoals] = useState([]);
@@ -9,7 +10,7 @@ const GoalProgressBar = () => {
   useEffect(() => {
     const fetchGoals = async () => {
       try {
-        const res = await axios.get('http://localhost:3201/goalRouter');
+        const res = await axios.get(`${baseURL}/goalRouter`);
         setGoals(res.data);
       } catch (err) {
         setError('Failed to fetch goals :' + err);

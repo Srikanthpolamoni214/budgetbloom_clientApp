@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { baseURL } from "../../App";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -8,6 +9,7 @@ const Profile = () => {
     name: "",
     email: "",
     photo: "",
+    photoUrl: "",
   });
 
   useEffect(() => {
@@ -17,11 +19,11 @@ const Profile = () => {
       try {
         const decoded = jwtDecode(token);
         console.log("Decoded Token:", decoded);
-console.log("Decoded Token Photo:", decoded);
         setUser({
           name: decoded.name || "Guest",
           email: decoded.email || "guest@example.com",
           photo: decoded.photo,
+          photoUrl: decoded.photoUrl || "",
         });
       } catch (err) {
         console.error("Invalid token:", err);
@@ -35,9 +37,9 @@ console.log("Decoded Token Photo:", decoded);
 
   return (
     <div className="profile-page bg-green-50 min-h-screen p-6 text-center">
-      {user.photo ? (
-        <img
-          src={`http://localhost:3201/uploads/${user.photo}`} height={100} width={100}
+      {/* {(user.photoUrl || user.photo) ? (
+        <img 
+          src={user.photoUrl ? user.photoUrl : `http://localhost:3201/uploads/${user.photo}`} height={100} width={100}
           alt="Profile"
           onError={(e) => {
             e.target.src = "/default.png";
@@ -50,7 +52,27 @@ console.log("Decoded Token Photo:", decoded);
           alt="Default Profile"
           className="w-24 h-24 rounded-full mx-auto border-2 border-green-500"
         />
-      )}
+      )} */}
+{(user.photoUrl || user.photo) ? (
+  <img
+    src={user.photoUrl ? user.photoUrl : `${baseURL}/uploads/${user.photo}`}
+    height={100}
+    width={100}
+    alt="Profile"
+    onError={(e) => {
+      e.target.src = "/default_profile_photo.avif";
+    }}
+    className="w-24 h-24 rounded-full mx-auto border-2 border-green-500"
+  />
+) : (
+  <img
+    src="/default_profile_photo.avif"
+    height={100}
+    width={100}
+    alt="Default Profile"
+    className="w-24 h-24 rounded-full mx-auto border-2 border-green-500"
+  />
+)}
 
       <h2 className="text-lg font-bold mt-4">{user.name}</h2>
       <p className="text-gray-600">{user.email}</p>

@@ -1,7 +1,7 @@
 // ExpenseForm.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { baseURL } from '../../App'; // Adjust the import path as necessary
 const ExpenseForm = ({ onExpenseAdded }) => {
   const [formData, setFormData] = useState({
     description: '',
@@ -19,10 +19,10 @@ const config = { headers: { authorization: `Bearer ${token}` } };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('https://budgetbloom-app.onrender.com/postexpenses', formData, config);
+      const response = await axios.post(`${baseURL}}/postexpenses`, formData, config);
       console.log("res" , response);
       if (response.data.message === 'Expense added successfully') {
-        const updatedExpenses = await axios.get('https://budgetbloom-app.onrender.com/expenses');
+        const updatedExpenses = await axios.get(`${baseURL}/expenses`);
         onExpenseAdded(updatedExpenses.data);
         setFormData({ description: '', amount: '', category: '', date: '' });
         alert("Expense added successfully");
