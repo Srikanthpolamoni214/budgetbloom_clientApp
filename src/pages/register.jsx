@@ -240,7 +240,7 @@ const Register = () => {
       console.log('Google User Info:', decoded);
       const { name, email, picture } = decoded;
 
-      const res = await fetch('http://localhost:3201/google-auth', {
+      const res = await fetch(`${baseURL}/google-auth`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
