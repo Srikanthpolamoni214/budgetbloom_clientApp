@@ -3,6 +3,7 @@ import StarRatingSelector from '../landing/stars';
 import ReviewCard from '../landing/reviewCard';
 import { FaStar } from 'react-icons/fa';
 import StarRatings from 'react-star-ratings';
+import { baseURL } from '../../App';
 const Ratings = () => {
   const [reviews, setReviews] = useState([]);
   const [formData, setFormData] = useState({
@@ -18,7 +19,7 @@ const Ratings = () => {
   const [total, setTotal] = useState(0);
 
   const fetchReviews = () => {
-    fetch('https://budgetbloom-app.onrender.com/api/reviews')
+    fetch(`${baseURL}/api/reviews`)
       .then((res) => res.json())
       .then((data) => {
         const sorted = data.reviews.sort(
@@ -67,7 +68,7 @@ const Ratings = () => {
       body.append('photo', formData.photo);
     }
 
-    fetch('http://localhost:3201/api/reviews', {
+    fetch(`${baseURL}/api/reviews`, {
       method: 'POST',
       body,
     })
