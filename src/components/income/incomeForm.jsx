@@ -36,13 +36,13 @@ const IncomeForm = ({ onIncomeAdded }) => {
 
     try {
       const response = await axios.post(`${baseURL}/income`, formData, config);
-
-      if (response.data.message === "Income added successfully") {
+      if (response.data.message== "Income Added Successfully") {
         const updatedIncome = await axios.get(`${baseURL}/getIncome`, config);
-        onIncomeAdded(updatedIncome.data);
-
-        setFormData({ source: '', amount: '', category: '', date: '' });
         alert("Income added successfully!");
+console.log('Updated income data:', updatedIncome);
+        setFormData({ source: '', amount: '', category: '', date: '' });
+        onIncomeAdded(updatedIncome.data);
+        
       }
     } catch (err) {
       console.error('Failed to add income:', err);

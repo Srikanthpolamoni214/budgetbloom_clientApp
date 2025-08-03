@@ -29,11 +29,13 @@ const config = { headers: { 'Content-Type': 'application/json',Authorization: `B
     })
       .then(res => res.json())
       .then(savedItem => setBudgets([...budgets, savedItem]));
+      alert("Budget added successfully!");
   };
 
   const deleteBudget = (id) => {
     fetch(`${baseURL}/budgets/${id}`, { method: 'DELETE' , headers: config.headers })
       .then(() => setBudgets(budgets.filter(b => b.id !== id)));
+      alert( "Budget deleted successfully!");
   };
 
   return (

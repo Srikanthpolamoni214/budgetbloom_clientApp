@@ -68,19 +68,28 @@ import { baseURL } from "../../App";
 const BudgetComparisonTable = () => {
   const [budgets, setBudgets] = useState([]);
   const [expenses, setExpenses] = useState([]);
+const token = localStorage.getItem("token");
+
+const config = {
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${token}`
+  }
+};
 
   useEffect(() => {
     const fetchBudgets = async () => {
-      const response = await fetch(`${baseURL}/budgets`);
+      const response = await fetch(`${baseURL}/budgets`, config);
       const data = await response.json();
       setBudgets(data);
     };
     fetchBudgets();
   }, []);
 
+
   useEffect(() => {
     const fetchExpenses = async () => {
-      const response = await fetch(`${baseURL}/expenses`);
+      const response = await fetch(`${baseURL}/expenses`, config);
       const data = await response.json();
       setExpenses(data);
     };

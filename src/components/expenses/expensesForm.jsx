@@ -19,10 +19,10 @@ const config = { headers: { authorization: `Bearer ${token}` } };
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${baseURL}}/postexpenses`, formData, config);
+      const response = await axios.post(`${baseURL}/postexpenses`, formData, config);
       console.log("res" , response);
       if (response.data.message === 'Expense added successfully') {
-        const updatedExpenses = await axios.get(`${baseURL}/expenses`);
+        const updatedExpenses = await axios.get(`${baseURL}/expenses`, config);
         onExpenseAdded(updatedExpenses.data);
         setFormData({ description: '', amount: '', category: '', date: '' });
         alert("Expense added successfully");

@@ -28,6 +28,7 @@ const config = {
   const deleteGoal = async (goal_id) => {
     await fetch(`${baseURL}/api/goalsTracker/${goal_id}`, { method: 'DELETE', headers: config.headers });
     fetchGoals();
+    alert("Goal deleted successfully!");  
   };
 
 

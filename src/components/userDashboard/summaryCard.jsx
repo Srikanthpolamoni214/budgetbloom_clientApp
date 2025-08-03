@@ -38,8 +38,14 @@ const SummaryCards = ({ incomedata, expenseData }) => {
     new Set([...incomedata, ...expenseData].map((d) => d.category).filter(Boolean))
   );
 console.log("485" , categories)
+const token = localStorage.getItem("token");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      },
+      };
   useEffect(() => {
-    fetch(`${baseURL}/api/goalsTracker`)
+    fetch(`${baseURL}/api/goalsTracker` , config  )
       .then((res) => res.json())
       .then((data) => {
         if (data.goal) {

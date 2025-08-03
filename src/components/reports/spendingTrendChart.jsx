@@ -5,9 +5,16 @@ import { baseURL } from "../../App";
 
 const SpendingTrendChart = () => {
   const [data, setData] = useState([]);
+const token = localStorage.getItem("token");
+const config = {
+  headers: {
+    "Content-Type": "application/json",
 
+    "Authorization": `Bearer ${token}`
+  }
+};
   useEffect(() => {
-    fetch(`${baseURL}/report`)
+    fetch(`${baseURL}/expenses`, config)
       .then(res => res.json())
       .then(data => setData(data));
      

@@ -7,15 +7,22 @@ const SavingsGrowthChart = () => {
   
   const [expenses, setExpenses] = useState([]);
   const [income, setIncome] = useState([]);
-
+const token = localStorage.getItem("token");
+const config = {
+  headers: {
+    "Content-Type": "application/json",
+    "Authorization": `Bearer ${token}`
+  }
+};
   useEffect(() => {
-    fetch(`${baseURL}/report`)
+    fetch(`${baseURL}/expenses`, config)
       .then((res) => res.json())
       .then((data) => setExpenses(data));
   }, []);
 
+
   useEffect(() => {
-    fetch(`${baseURL}/getIncome`)
+    fetch(`${baseURL}/getIncome`, config)
       .then((res) => res.json())
       .then((data) => setIncome(data));
   }, []);
