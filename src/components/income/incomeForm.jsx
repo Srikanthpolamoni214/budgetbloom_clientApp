@@ -35,7 +35,7 @@ const IncomeForm = ({ onIncomeAdded }) => {
     }
 
     try {
-      const response = await axios.post(`${baseURL}http://localhost:3201/income`, formData, config);
+      const response = await axios.post(`${baseURL}/income`, formData, config);
 
       if (response.data.message === "Income added successfully") {
         const updatedIncome = await axios.get(`${baseURL}/getIncome`, config);
