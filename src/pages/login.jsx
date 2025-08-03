@@ -55,19 +55,17 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-800 px-4">
-      <div className="bg-white dark:bg-gray-900 p-8 rounded-lg shadow-md w-full border-2 border-green-500" style={{ maxWidth: "270px" }}>
-        <h1 className="text-2xl font-semibold mb-6 text-center text-gray-800 dark:text-gray-100">
-          Login Page
-        </h1>
-        <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="login-container  flex items-center justify-center bg-gray-100 dark:bg-gray-800">
+      <div style={{marginTop:"-10%"}}>
+        <h3 style={{textAlign: "center"}}>Login Page</h3>
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"
             name="email"
             onChange={handleChange}
             required
             placeholder="Email"
-            className="input-field"
+            className="input"
           />
           <input
             type="password"
@@ -75,12 +73,9 @@ const Login = () => {
             onChange={handleChange}
             required
             placeholder="Password"
-            className="input-field"
+            className="input"
           />
-          <button
-            type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded transition duration-300"
-          >
+          <button type="submit" className="w-full">
             Login
           </button>
         </form>

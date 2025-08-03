@@ -4,6 +4,7 @@ import ReviewCard from '../landing/reviewCard';
 import { FaStar } from 'react-icons/fa';
 import StarRatings from 'react-star-ratings';
 import { baseURL } from '../../App';
+import './reviewCard.css';
 const Ratings = () => {
   const [reviews, setReviews] = useState([]);
   const [formData, setFormData] = useState({
@@ -94,7 +95,7 @@ const Ratings = () => {
   return (
     <section className="bg-gray-50 dark:bg-gray-800 py-16 px-6 md:px-16">
      
-<div className="max-w-4xl mx-auto text-center">
+<div className="bg-cd">
   <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">User Reviews</h2>
 
   {/* ⭐ Average Rating Display */}
@@ -170,7 +171,7 @@ const Ratings = () => {
         </form>
 
         {/* Reviews */}
-        <div className="space-y-6">
+        <div className="review-cd">
           {reviews.map((review, index) => (
             <ReviewCard key={index} review={review} />
           ))}

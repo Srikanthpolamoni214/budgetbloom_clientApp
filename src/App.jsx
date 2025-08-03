@@ -19,7 +19,7 @@ import ContactUs from './components/landing/contactUs';
 import Ratings from './components/landing/rating';
 import ProtectedRoute from './components/common/protectedRoutes';
 import Profile from './components/profile/profile';
-export const baseURL  = "https://budgetbloom-server.onrender.com"
+export const baseURL  = "http://localhost:3201"
 const App = () => {
   return (
       <BrowserRouter>

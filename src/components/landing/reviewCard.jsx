@@ -4,7 +4,7 @@ import { FaUserCircle } from 'react-icons/fa';
 import moment from 'moment';
 
 import "./reviewCard.css";
-
+import { baseURL } from '../../App';
 
 
 const ReviewCard = ({ review }) => {
@@ -15,18 +15,19 @@ const ReviewCard = ({ review }) => {
       <div className="review-avatar">
         {photo ? (
           <img
-            src={`http://localhost:3201/uploads/${photo}`}
+            src={`${baseURL}/uploads/${photo? photo : '/default_profile_photo.avif'}`}
             alt={name}
             className="avatar-img"
           />
         ) : (
           <FaUserCircle className="avatar-icon" />
         )}
+                  <h4 className="review-name">{name}</h4>
+
       </div>
 
       <div className="review-content">
         <div className="review-header">
-          <h4 className="review-name">{name}</h4>
           <p className="review-date">{moment(created_at).fromNow()}</p>
         </div>
 
