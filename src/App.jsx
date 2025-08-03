@@ -19,6 +19,7 @@ import ContactUs from './components/landing/contactUs';
 import Ratings from './components/landing/rating';
 import ProtectedRoute from './components/common/protectedRoutes';
 import Profile from './components/profile/profile';
+import VerifyEmail from './pages/verifypage';
 export const baseURL  = "https://budgetbloom-server.onrender.com"
 const App = () => {
   return (
@@ -35,6 +36,8 @@ const App = () => {
             <Route path="/" element={<LandingPage />} />
             <Route path="/rating" element={<Ratings />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+
             <Route path="/login" element={<LoginPage />} />
             <Route path="/about" element={<AboutUs />} />
             <Route path="/contactus" element={<ContactUs />} />
