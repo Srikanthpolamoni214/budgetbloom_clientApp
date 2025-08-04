@@ -75,7 +75,7 @@ const RecentActivityList = () => {
                     tx.type === 'income' ? 'text-green-600' : 'text-red-600'
                   }`}
                 >
-                  {tx.type === 'income' ? '+' : '-'}${Number(tx.amount).toLocaleString()}
+                  {tx.type === 'income' ? '+' : '-'}Rs:{Number(tx.amount).toLocaleString()}
                 </div>
               </li>
             );
