@@ -15,7 +15,7 @@ const IncomeList = ({ data }) => {
                 <p className="font-semibold">{item.source}</p>
                 <p className="text-sm text-gray-500">{item.category} • {new Date(item.date).toLocaleDateString()}</p>
               </div>
-              <div className="text-green-600 font-bold text-lg">+${item.amount.toLocaleString()}</div>
+              <div className="text-green-600 font-bold text-lg">+Rs:{item.amount.toLocaleString()}</div>
             </li>
           ))}
         </ul>
