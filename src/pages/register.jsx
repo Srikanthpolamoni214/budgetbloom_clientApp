@@ -199,6 +199,8 @@ const Register = () => {
   const navigate = useNavigate();
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
+const [googleUser, setGoogleUser] = useState(null);
+const [password, setPassword] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -234,35 +236,68 @@ const Register = () => {
     }
   };
 
-  const handleGoogleSuccess = async (credentialResponse) => {
-    try {
-      const decoded = jwtDecode(credentialResponse.credential);
-      console.log('Google User Info:', decoded);
-      const { name, email, picture } = decoded;
+//   const handleGoogleSuccess = async (credentialResponse) => {
+//     try {
+//       const decoded = jwtDecode(credentialResponse.credential);
+//       console.log('Google User Info:', decoded);
+//       const { name, email, picture } = decoded;
 
-      const res = await fetch(`${baseURL}/google-auth`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email, photoUrl: picture }),
-      });
+//       const res = await fetch(`${baseURL}/google-auth`, {
+//         method: 'POST',
+//         headers: {
+//           'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ name, email, photoUrl: picture }),
+//       });
 
-      const result = await res.json();
+//       const result = await res.json();
 
-      if (result.success) {
-        alert('✅ Google Sign-In Successful');
-        localStorage.setItem('token', result.token);
-navigate('/dashboard');
+//       if (result.success) {
+//         alert('✅ Google Sign-In Successful');
+//         localStorage.setItem('token', result.token);
+// navigate('/login');
 
-      } else {
-        alert('❌ Google Sign-In Failed');
-      }
-    } catch (err) {
-      console.error('Google Auth Error:', err);
-      alert('Google Authentication Failed');
-    }
-  };
+//       } else {
+//         alert('❌ Google Sign-In Failed');
+//       }
+//     } catch (err) {
+//       console.error('Google Auth Error:', err);
+//       alert('Google Authentication Failed');
+//     }
+//   };
+const handleGoogleSuccess = async (credentialResponse) => {
+  try {
+    const decoded = jwtDecode(credentialResponse.credential);
+    const { name, email, picture } = decoded;
+    setGoogleUser({ name, email, photoUrl: picture }); // Save temporarily
+  } catch (err) {
+    alert("Google Authentication Failed");
+  }
+};
+const handleGoogleCompleteSignup = async (e) => {
+  e.preventDefault();
+
+  const res = await fetch(`${baseURL}/google-register`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name: googleUser.name,
+      email: googleUser.email,
+      photoUrl: googleUser.photoUrl,
+      password, // send password too
+    }),
+  });
+
+  const result = await res.json();
+
+  if (result.success) {
+    alert("✅ Google Signup Completed");
+    localStorage.setItem("token", result.token);
+    navigate("/dashboard");
+  } else {
+    alert("❌ Signup Failed");
+  }
+};
 
   return (
     <div className="register-container min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-800">
@@ -309,6 +344,22 @@ navigate('/dashboard');
             onSuccess={handleGoogleSuccess}
             onError={() => alert('Google Sign-In Failed')}
           />
+          {googleUser && (
+  <form onSubmit={handleGoogleCompleteSignup} className="space-y-4 mt-4">
+    <input
+      type="password"
+      placeholder="Set a password"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      className="input"
+      required
+    />
+    <button type="submit" className="w-full bg-indigo-600 text-white py-2 rounded-lg">
+      Complete Signup
+    </button>
+  </form>
+)}
+
         </div>
 
         <p className="mt-4 text-center text-sm">
