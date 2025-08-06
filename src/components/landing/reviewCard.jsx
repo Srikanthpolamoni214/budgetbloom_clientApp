@@ -15,7 +15,7 @@ const ReviewCard = ({ review }) => {
       <div className="review-avatar">
         {photo ? (
           <img
-            src={`${baseURL}/uploads/${photo? photo : '/default_profile_photo.avif'}`}
+            src={`${baseURL}/uploads/${photo? photo : 'default_profile_photo.avif'}`}
             alt={name}
             className="avatar-img"
           />
