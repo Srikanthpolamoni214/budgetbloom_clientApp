@@ -20,8 +20,7 @@ import Ratings from './components/landing/rating';
 import ProtectedRoute from './components/common/protectedRoutes';
 import Profile from './components/profile/profile';
 import VerifyEmail from './pages/verifypage';
-// export const baseURL  = "https://budgetbloom-server.onrender.com"
-export  const baseURL = "http://localhost:3201"; // Update this to your backend URL
+export const baseURL  = "https://budgetbloom-server.onrender.com"
 const App = () => {
   return (
       <BrowserRouter>
