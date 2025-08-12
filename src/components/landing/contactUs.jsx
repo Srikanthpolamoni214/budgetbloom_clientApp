@@ -1,13 +1,47 @@
-import React, { useState } from 'react';
-
+import React, { useState , useEffect } from 'react';
+import {jwtDecode} from 'jwt-decode'
+import { baseURL } from '../../App';
 const ContactUs = () => {
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  // const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(null);
+ const [user, setUser] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token  && typeof token === "string") {
+      const decoded = jwtDecode(token);
+      setUser((prev) => ({
+        ...prev,
+      name: decoded.name || "",
+      email: decoded.email || "",
+     
+    }));
+  }
+}, []);
+  // Now safely use userData if it's not null
+  if (user) {
+    console.log("User data:", user);
+  }
+
+  // Now safely use userData if it's not null
+
+
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  };
+
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setUser((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
@@ -15,19 +49,17 @@ const ContactUs = () => {
     setError(null);
 
     try {
-      const res = await fetch('http://localhost:3201/api/contact', {
+      const res = await fetch(`${baseURL}/contact`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        ...config,
+        body: JSON.stringify(user),
       });
 
       const data = await res.json();
 
       if (res.ok) {
         setSubmitted(true);
-        setFormData({ name: '', email: '', message: '' });
+        setUser({ name: '', email: '', message: '' });
       } else {
         setError(data.error || 'Something went wrong');
       }
@@ -67,7 +99,7 @@ const ContactUs = () => {
               id="name"
               name="name"
               type="text"
-              value={formData.name}
+              value={user.name}
               onChange={handleChange}
               required
               className="w-full px-4 py-2 border rounded-md bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -82,7 +114,7 @@ const ContactUs = () => {
               id="email"
               name="email"
               type="email"
-              value={formData.email}
+              value={user.email}
               onChange={handleChange}
               required
               className="w-full px-4 py-2 border rounded-md bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
@@ -97,7 +129,7 @@ const ContactUs = () => {
               id="message"
               name="message"
               rows="5"
-              value={formData.message}
+              value={user.message}
               onChange={handleChange}
               required
               className="w-full px-4 py-2 border rounded-md bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
