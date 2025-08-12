@@ -5,7 +5,11 @@ import { FaStar } from 'react-icons/fa';
 import StarRatings from 'react-star-ratings';
 import { baseURL } from '../../App';
 import './reviewCard.css';
+import LoginModal from '../common/modalCommon';
 const Ratings = () => {
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [token, setToken] = useState(false);
+
   const [reviews, setReviews] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
@@ -18,6 +22,11 @@ const Ratings = () => {
   const [error, setError] = useState(null);
   const [average, setAverage] = useState(null);
   const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+  const gettoken = localStorage.getItem('token');
+  setToken(gettoken ? true : false);
+}, []);
 
   const fetchReviews = () => {
     fetch(`${baseURL}/api/reviews`)
@@ -49,7 +58,19 @@ const Ratings = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+const config = {
+  headers: {
+    'Content-Type': 'multipart/form-data',
+    Authorization: `Bearer ${localStorage.getItem('token')}`,
+  },
+};
+  const handleSubmit =  async (e) => {
+     if (!token) {
+    e.preventDefault();
+    setShowLoginModal(true);
+    return;
+  }
+
     e.preventDefault();
     setError(null);
     setSubmitted(false);
@@ -69,27 +90,36 @@ const Ratings = () => {
       body.append('photo', formData.photo);
     }
 
-    fetch(`${baseURL}/api/reviews`, {
+    // fetch(`${baseURL}/api/reviews`, { method: 'POST', body, ...config })
+    //   .then((res) => {
+    //     if (!res.ok) return res.json().then((err) => { throw new Error(err.message); });
+    //     return res.json();
+    //   })
+    //   .then(() => {
+    //     setFormData({ name: '', rating: 0, comment: '', photo: null });
+    //     alert('✅ Review submitted successfully!');
+    //     setSubmitted(true);
+    //     fetchReviews();
+    //     setTimeout(() => setSubmitted(false), 3000);
+    //   })
+    //   .catch((err) => {
+    //     console.error(err);
+    //     alert(`❌ ${err.message}`);
+    //     setError(err.message);
+    //   })
+    //   .finally(() => setSubmitting(false));
+    
+
+
+    const fetch =  await fetch(`${baseURL}/api/reviews`, {
       method: 'POST',
       body,
-    })
-      .then((res) => {
-        if (!res.ok) return res.json().then((err) => { throw new Error(err.message); });
-        return res.json();
-      })
-      .then(() => {
-        setFormData({ name: '', rating: 0, comment: '', photo: null });
-        alert('✅ Review submitted successfully!');
-        setSubmitted(true);
-        fetchReviews();
-        setTimeout(() => setSubmitted(false), 3000);
-      })
-      .catch((err) => {
-        console.error(err);
-        alert(`❌ ${err.message}`);
-        setError(err.message);
-      })
-      .finally(() => setSubmitting(false));
+      ...config
+    });
+      const data = await fetch.json();
+      console.log(  " data", data);
+
+   
   };
 
   return (
@@ -177,7 +207,10 @@ const Ratings = () => {
           ))}
         </div>
       </div>
+      <LoginModal visible={showLoginModal} onClose={() => setShowLoginModal(false)} />
+
     </section>
+    
   );
 };
 
