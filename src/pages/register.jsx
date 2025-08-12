@@ -84,7 +84,7 @@ const Register = () => {
       localStorage.setItem("token", result.token);
       navigate("/login");
     } else if (result.message === 'Email already exists') {
-      setMessage("Registration failed: Email already exists");
+      setMessage("Registration failed: Email already exists or Google account already linked. Please login.");
       // alert("⚠️ User already exists. Please login.");
       // navigate("/login");
     } else {
